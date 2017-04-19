@@ -33,6 +33,8 @@ const int NEO_PIXEL_PIN = 3;           // Output pin for neo pixels.
 const int NEO_PIXEL_COUNT = 4;         // Number of neo pixels.  You should be able to increase this without
                                        // any other changes to the program.
 const int MAX_CHARS = 65;              // Max size of the input command buffer
+int ledGreen = 31;
+int ledRed = 32;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +57,8 @@ unsigned long toneStart = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 void setup() {
+  pinMode(ledRed, OUTPUT);
+  pinMode(ledGreen, OUTPUT);
   // Set up serial port.
   Serial.begin(38400);
   
@@ -172,17 +176,11 @@ void toneLoop() {
 
 void toneDetected() {
   // Flash the LEDs four times.
-  int pause = 250;
+  int pause = 125;
   for (int i = 0; i < 4; ++i) {
-    for (int j = 0; j < NEO_PIXEL_COUNT; ++j) {
-      pixels.setPixelColor(j, pixels.Color(255, 0, 0));
-    }
-    pixels.show();
+    digitalWrite(ledRed, HIGH);
     delay(pause);
-    for (int j = 0; j < NEO_PIXEL_COUNT; ++j) {
-      pixels.setPixelColor(j, 0);
-    }
-    pixels.show();
+    digitalWrite(ledRed, LOW);
     delay(pause);
   }
 }
